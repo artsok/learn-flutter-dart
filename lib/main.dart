@@ -3,6 +3,7 @@ import 'package:first_app/widgets/new_transaction.dart';
 import 'package:first_app/widgets/transaction_list.dart';
 import 'package:first_app/widgets/user_transaction.dart';
 
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -22,11 +23,23 @@ class MyHomePage extends StatelessWidget {
 //  String titleInput;
 //  String amountInput;
 
+  void startTheProccessNewTransaction() {
+    showModalBottomSheet(context: ctx, builder: (bCtx) {
+      return NewTransaction();
+    }, );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter App'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: null,
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -45,6 +58,11 @@ class MyHomePage extends StatelessWidget {
               ),
               UserTransactions(),
             ]),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
       ),
     );
   }

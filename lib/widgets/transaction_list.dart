@@ -4,13 +4,14 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function deletTx; //Функция по удалению
 
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.deletTx); //Передаем функцию по удалению из списка
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
+      height: 500,
       child: transactions.isEmpty
           ? Column(
               children: <Widget>[
@@ -27,9 +28,11 @@ class TransactionList extends StatelessWidget {
             )
           : ListView.builder(
               itemBuilder: (ctx, index) {
-                return Card  (
-                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5), //spacing  между элементами
-                  elevation: 5, //Тень
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  //spacing  между элементами
+                  elevation: 5,
+                  //Тень
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 30,
@@ -45,6 +48,11 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(
                       DateFormat.yMMMd().format(transactions[index].date),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () => deletTx(transactions[index].id), //У функции _deleteTransaction есть входной аргумент, но мы оборачиваем
                     ),
                   ),
                 );

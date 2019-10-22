@@ -15,21 +15,27 @@ class _NewTransactionState extends State<NewTransaction> {
   final _amountController = TextEditingController();
   DateTime _selectedDate;
 
-  void _submitData() {
+  void submitData() {
+
+    if (_amountController.text.isEmpty) {
+      return;
+    }
+
     final entredTitle = _titleController.text;
     final enteredAmount = double.parse(_amountController.text);
 
-    if (entredTitle.isEmpty || enteredAmount <= 0) {
+    if (entredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
       return;
     }
 
     //this code NO Rich
-    widget.logicForButton(entredTitle, enteredAmount);
+    widget.logicForButton(entredTitle, enteredAmount, _selectedDate);
 
     Navigator.of(context).pop();
   }
 
-  //Show date picker
+
+  //Show date on the screen
   void _presentDatePicker() {
     showDatePicker(
             context: context,
@@ -61,14 +67,14 @@ class _NewTransactionState extends State<NewTransaction> {
             TextField(
               decoration: InputDecoration(labelText: "Title"),
               controller: _titleController,
-              onSubmitted: (_) => _submitData,
+              onSubmitted: (_) => submitData,
             ),
             //Ввод данных пользователя
             TextField(
               decoration: InputDecoration(labelText: "Amount"),
               controller: _amountController,
               keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitData,
+              onSubmitted: (_) => submitData,
             ),
             Container(
               height: 70,
@@ -100,7 +106,7 @@ class _NewTransactionState extends State<NewTransaction> {
               color: Theme.of(context).primaryColor,
               textColor: Colors.white,
               onPressed: () {
-                _submitData();
+                submitData();
                 print("${_titleController.text}  ${_amountController.text}");
               },
             )

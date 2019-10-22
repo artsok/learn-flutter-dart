@@ -27,48 +27,71 @@ class TransactionList extends StatelessWidget {
             )
           : ListView.builder(
               itemBuilder: (ctx, index) {
-                return Card(
-                  //Widget which build for the items!! For first, second,
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                                width: 3)),
-                        child: Text(
-                          "\$${transactions[index].amount.toStringAsFixed(2)}",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.purple),
-                        ),
+                return Card  (
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5), //spacing  между элементами
+                  elevation: 5, //Тень
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: EdgeInsets.all(6),
+                        child: FittedBox(
+                            child: Text('\$${transactions[index].amount}')),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            transactions[index].title,
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            DateFormat("yyyy-MM-dd")
-                                .format(transactions[index].date),
-                            //Используем индексы
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                          )
-                        ],
-                      )
-                    ],
+                    ),
+                    title: Text(
+                      transactions[index].title,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMd().format(transactions[index].date),
+                    ),
                   ),
-                  //Widget build for itemN
                 );
+
+//                Замена выше
+//                return Card(
+//                  //Widget which build for the items!! For first, second,
+//                  child: Row(
+//                    children: <Widget>[
+//                      Container(
+//                        margin:
+//                        EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+//                        padding:
+//                        EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+//                        decoration: BoxDecoration(
+//                            border: Border.all(
+//                                color: Theme.of(context).primaryColor,
+//                                width: 3)),
+//                        child: Text(
+//                          "\$${transactions[index].amount.toStringAsFixed(2)}",
+//                          style: TextStyle(
+//                              fontWeight: FontWeight.bold,
+//                              fontSize: 20,
+//                              color: Colors.purple),
+//                        ),
+//                      ),
+//                      Column(
+//                        crossAxisAlignment: CrossAxisAlignment.start,
+//                        children: <Widget>[
+//                          Text(
+//                            transactions[index].title,
+//                            style: TextStyle(
+//                                fontSize: 18, fontWeight: FontWeight.bold),
+//                          ),
+//                          Text(
+//                            DateFormat("yyyy-MM-dd")
+//                                .format(transactions[index].date),
+//                            //Используем индексы
+//                            style: TextStyle(
+//                                color: Theme.of(context).primaryColor),
+//                          )
+//                        ],
+//                      )
+//                    ],
+//                  ),
+//                  //Widget build for itemN
+//                );
               },
 
               itemCount: transactions.length, //Number of items

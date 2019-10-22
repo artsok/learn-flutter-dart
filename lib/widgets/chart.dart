@@ -1,4 +1,5 @@
 import 'package:first_app/models/transaction.dart';
+import 'package:first_app/widgets/chart_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -27,6 +28,13 @@ class Chart extends StatelessWidget {
     });
   }
 
+  double get maxSpending {
+    //fold преобразует лист в другой тип объекта. Аналог reduce in Java!
+    return groupedTransactionValues.fold(0.0, (sum, item) {
+      return sum + item['amount'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print(groupedTransactionValues);
@@ -36,7 +44,12 @@ class Chart extends StatelessWidget {
       child: Row(
         //Требует сгенерить показатели для каждого дня
         children: groupedTransactionValues.map((data) {
-          return Text("${data['day']} : ${data['amount']}");
+          //return Text("${data['day']} : ${data['amount']}");
+          return CharBar(
+            data["day"],
+            data["amount"],
+            maxSpending == 0.0 ? 0.0: (data['amount'] as double) / maxSpending,
+          );
         }).toList(),
       ),
     );
